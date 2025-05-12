@@ -12,7 +12,7 @@ FAISS_FILE = "faiss_index.index"
 def build_faiss_index():
     embeddings = np.load(EMBEDDINGS_FILE)
 
-    index = faiss.IndexFlatL2(embeddings.shape[1])  # L2 mesafesi için düz bir indeks oluştur
+    index = faiss.IndexFlatL2(embeddings.shape[1])  
     index.add(embeddings)
 
     # Kaydet

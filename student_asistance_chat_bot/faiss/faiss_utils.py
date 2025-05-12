@@ -10,6 +10,7 @@ METADATA_FILE = "metadata.pkl"
 FAISS_FILE = "faiss_index.index"
 SIMILARITY_THRESHOLD = 0.8
 
+##benzerlik oranını ölçüyor
 def cosine_similarity(vec1, vec2):
     norm1 = np.linalg.norm(vec1)
     norm2 = np.linalg.norm(vec2)
@@ -18,7 +19,7 @@ def cosine_similarity(vec1, vec2):
     return np.dot(vec1, vec2) / (norm1 * norm2)
 
 def process_user_question(user_question):
-    # Gerekli dosyaları ve modeli yükle
+    # Gerekli dosyaları ve modeli yükleniyor
     model = SentenceTransformer("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
     query_embedding = model.encode([user_question]).astype("float32")
 
@@ -38,11 +39,10 @@ def process_user_question(user_question):
         print("Sorduğunuz soru veri tabanındaki sorularla yeterince benzer değil. Lütfen farklı bir şekilde sorun.")
     else:
         matched_id = metadata[matched_idx]["id"]
-        # Bu fonksiyon Airtable'dan id'ye göre cevabı almalı (senin yazman gereken kısım)
+        # Bu fonksiyon Airtable'dan id'ye göre cevap alır
         cevap = get_answer_by_id(API_KEY, BASE_ID, TABLE_NAME, matched_id)
         print(f"Cevap: {cevap}")
 
-# Kullanıcıdan giriş al
 if __name__ == "__main__":
     user_input = input("Bir soru sorun: ")
     process_user_question(user_input)
